@@ -44,9 +44,9 @@ def plot_results(devices, sizes, times):
     ax1.legend(devices, loc=2)
     
     ax2.plot(sizes, np.divide(times[devices[1]], times[devices[0]]), 'o-', label=device)
-    ax2.set_ylabel('Speedup')
+    ax2.set_ylabel('GPU Speedup')
     ax2.set_xlabel('Matrix size')
-    ax2.set_title('Speedup GPU relative to CPU vs. Matrix size')
+    ax2.set_title('GPU Speedup vs. Matrix size')
     
     pyplot.show()
 
