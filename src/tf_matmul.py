@@ -8,7 +8,7 @@ import matplotlib.pyplot as pyplot
 def benchmark(devices):
     '''Benchmark each device by computing matrix products'''
     times = {device: [] for device in devices}
-    sizes = range(100, 700, 500)
+    sizes = range(100, 7000, 500)
 
     for size in sizes:
 
