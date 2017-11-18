@@ -41,6 +41,9 @@
                     ]
                 },
                 "ImageId": "ami-f1e73689",
+                "IamInstanceProfile": {
+                    "Ref": "Ec2InstanceProfile"
+                },
                 "InstanceType": "p2.xlarge",
                 "KeyName": {
                     "Ref": "AWS::AccountId"
@@ -64,6 +67,60 @@
                             ]
                         }
                     }
+                ]
+            }
+        },
+        "Ec2Role": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "ec2.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyName": "Ec2-Read-Only",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Action": [
+                                        "ec2:Describe*",
+                                        "ec2:List*"
+                                    ],
+                                    "Resource": "*",
+                                    "Effect": "Allow",
+                                    "Condition": {
+                                        "StringEquals": {
+                                            "ec2:Region": "us-west-2"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "Ec2InstanceProfile": {
+            "Type": "AWS::IAM::InstanceProfile",
+            "Properties": {
+                "Path": "/",
+                "Roles": [
+                    "Ec2Role"
                 ]
             }
         },
